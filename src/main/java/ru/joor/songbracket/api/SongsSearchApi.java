@@ -21,20 +21,19 @@ public class SongsSearchApi {
 
     private static final String SEARCH_API_URL = "http://api.genius.com/artists/{id}/songs";
 
-    public void getSongs(String id) throws JsonProcessingException {
+    public void getSongs(String id, String name) throws JsonProcessingException {
 
         // Создание URL и параметров запроса
-        String builder = UriComponentsBuilder.fromUriString(SEARCH_API_URL)
+        String request = UriComponentsBuilder.fromUriString(SEARCH_API_URL)
                 .queryParam("sort", "popularity")
                 .queryParam("per_page", "50")
                 .buildAndExpand(id)
                 .toUriString();
         // Выполнение запроса
-        ResponseEntity<String> response = restTemplate.exchange(builder, HttpMethod.GET, null, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(request, HttpMethod.GET, null, String.class);
 
         // Перенаправление запроса при необходимости
         String responseBody = redirectHandler.redirectIf3xx(response);
-        System.out.println(responseBody);
 
         //Считывание ответа
         JsonNode rootNode = objectMapper.readTree(responseBody);
@@ -45,7 +44,7 @@ public class SongsSearchApi {
                 // Получение нужных полей из artistNode
                 String title = songNode.get("title").asText();
                 String artistName = songNode.get("primary_artist").get("name").asText();
-                if( artistName.contains("Kanye")) {
+                if( artistName.contains(name)) {
                     i++;
                     System.out.println("Song Title: " + title);
                     System.out.println("Artist Name: " + artistName);

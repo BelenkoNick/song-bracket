@@ -5,12 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import ru.joor.songbracket.api.ArtistSearchApi;
-import ru.joor.songbracket.api.SongsSearchApi;
-import ru.joor.songbracket.entity.Artist;
 import ru.joor.songbracket.service.GameLoop;
-
-import java.util.Scanner;
 
 @SpringBootApplication
 public class App {

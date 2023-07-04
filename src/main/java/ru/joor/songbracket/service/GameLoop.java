@@ -17,11 +17,12 @@ public class GameLoop {
     @Autowired
     SongsSearchApi songsSearchApi;
 
+    private final Scanner scanner = new Scanner(System.in);
+
     public void play() throws JsonProcessingException {
         System.out.println("Введите своего испольнителя:");
-        Scanner sc = new Scanner(System.in);
-        String artistToSearch = sc.nextLine();
+        String artistToSearch = scanner.nextLine();
         Artist artist = artistSearchApi.getArtist(artistToSearch.replaceAll("\\s", ""));
-        songsSearchApi.getSongs(artist.getId());
+        songsSearchApi.getSongs(artist.getId(), artist.getArtistName());
     }
 }
